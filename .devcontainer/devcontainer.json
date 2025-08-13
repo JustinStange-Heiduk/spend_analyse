@@ -1,0 +1,20 @@
+{
+  "name": "Spend Analysis Dev",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "spendapp",
+  "workspaceFolder": "/workspace",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "python.defaultInterpreterPath": "/usr/local/bin/python"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-toolsai.jupyter",
+    "mhutchie.git-graph",
+    "GitHub.vscode-pull-request-github",
+    "github.copilot",
+    "github.copilot-chat",
+  ],
+  "postCreateCommand": "pip install --no-cache-dir -r requirements.txt && echo 'Devcontainer ist fertig gebaut und einsatzbereit.'",
+  "remoteUser": "root"
+}

@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  spendapp:
+    build: .
+    volumes:
+      - .:/workspace
+    ports:
+      - "8888:8888" # falls wir Jupyter nutzen wollen
+    command: >
+      bash -c "sleep infinity"

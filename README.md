@@ -28,6 +28,44 @@ Geplant (später):
 ├── data/                        # Ergebnis-CSV (git-ignored)
 └── .env                         # lokale Secrets (NICHT committen)
 
+-------------------------------------------------------------------------------
+
+.env-Konfiguration
+
+Vor dem Start des Containers müssen die Zugangsdaten zum SFTP-Server konfiguriert werden.
+
+Vorlage kopieren
+
+cp env/.env.example env/.env
+
+
+Echte Werte eintragen (Host, Benutzername, Passwort oder SSH-Key-Pfad).
+
+Beispiel (env/.env.example):
+
+# SFTP Server-Verbindung
+SFTP_HOST=your-sftp-host
+SFTP_PORT=22
+SFTP_USERNAME=your-username
+SFTP_PASSWORD=your-password
+SFTP_PKEY_PATH=
+SFTP_REMOTE_DIR=/
+CSV_PATTERN=*.csv
+FX_RATES_REMOTE_PATH=
+
+
+Fallback-Mechanismus
+In docker-compose.yml sind zwei env_file-Einträge definiert:
+
+env_file:
+  - env/.env           # Echte Werte, falls vorhanden
+  - env/.env.example   # Platzhalter als Fallback
+
+
+Falls keine .env existiert, verwendet der Container automatisch die Platzhalterwerte aus .env.example.
+→ Container baut immer, egal ob Zugangsdaten vorhanden sind.
+-------------------------------------------------------------------------------
+
 Voraussetzungen
     Docker Desktop (WSL2 unter Windows)
     Visual Studio Code + Extension Dev Containers
@@ -60,3 +98,8 @@ docker compose up -d
 # Stoppen & aufräumen
 docker compose down
 In der Dev‑Routine nicht nötig; „Reopen in Container“ ist der Standard.
+
+-------------------------------------------------------------------------------
+
+# Git Verlauf checken
+git log --oneline --decorate --graph

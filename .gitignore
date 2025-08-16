@@ -1,0 +1,12 @@
+# Secrets (nur Platzhalter committen)
+env/.env
+
+# Lokale Daten-Layer (Medallion Architecture) – nur Inhalt ignorieren, Ordner behalten
+data/bronze/*
+data/silver/*
+data/gold/*
+
+# Leere Ordner erhalten
+!data/bronze/.gitkeep
+!data/silver/.gitkeep
+!data/gold/.gitkeep

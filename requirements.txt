@@ -2,3 +2,4 @@ pandas==2.2.2
 numpy==1.26.4
 paramiko==3.4.0
 python-dotenv==1.0.1
+ipykernel==6.29.5

@@ -4,6 +4,10 @@ services:
     build: .
     volumes:
       - .:/workspace
+      - ./env/.env:/workspace/env/.env 
+    env_file:
+      - env/.env.example   # Fallback mit Platzhaltern
+      - env/.env           # echte Werte, falls vorhanden
     ports:
       - "8888:8888" # falls wir Jupyter nutzen wollen
     command: >

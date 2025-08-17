@@ -306,4 +306,4 @@ if __name__ == "__main__":
     rechnungen_2023_2024.to_csv("/workspace/data/silver/Rechnungen_SAP_2023_2024.csv", index=False, sep=";")
 
 
-    print("Daten Transformation abgeschlossen und in data/silver gespeichert.")
+    print("Silver Script ausgeführt")

@@ -120,4 +120,4 @@ if __name__ == "__main__":
 
     auswertung_3_2023_2024.to_csv("/workspace/data/gold/auswertung_3_2023_2024.csv", index=False, sep=";")
 
-    print("Auswertung abgeschlossen und in data/gold gespeichert.")
+    print("Gold Script ausgeführt")

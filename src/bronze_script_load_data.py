@@ -128,3 +128,5 @@ if __name__ == "__main__":
     client.listdir(".")                 
     client.download_all_to_bronze(".")  
     client.close()
+
+    print("Bronze Script ausgeführt")

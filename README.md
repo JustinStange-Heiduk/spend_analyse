@@ -144,6 +144,25 @@ In der Dev‑Routine nicht nötig; „Reopen in Container“ ist der Standard.
 
 -------------------------------------------------------------------------------
 
+Beim Öffnen des Projekts in Visual Studio Code mit dem Devcontainer-Setup werden die folgenden Skripte automatisch ausgeführt:
+
+python3 /workspace/src/bronze_script_load_data.py
+python3 /workspace/src/silver_script_data_transformation.py
+python3 /workspace/src/gold_auswertungen.py
+
+
+Diese befinden sich in der Datei .devcontainer/devcontainer.json unter dem Schlüssel:
+
+"postStartCommand": "python3 /workspace/src/bronze_script_load_data.py && python3 /workspace/src/silver_script_data_transformation.py && python3 /workspace/src/gold_auswertungen.py && echo 'Devcontainer ist fertig gebaut und einsatzbereit. '"
+
+
+Hinweis:
+Falls du nicht möchtest, dass die Analyse bei jedem Start automatisch ausgeführt wird (z. B. für manuelles Debugging oder schrittweises Testen), kannst du diese Zeile einfach auskommentieren oder löschen:
+
+// "postStartCommand": "python3 ...",
+
+-------------------------------------------------------------------------------
+
 # Git Verlauf checken
 git log --oneline --decorate --graph
 

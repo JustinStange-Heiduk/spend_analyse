@@ -10,5 +10,9 @@ services:
       - env/.env           # echte Werte, falls vorhanden
     ports:
       - "8888:8888" # falls wir Jupyter nutzen wollen
-    command: >
-      bash -c "sleep infinity"
+    # command: >
+    #   bash -c "sleep infinity"
+    command: bash -c "\
+      python3 /workspace/src/bronze_script_load_data.py && \
+      python3 /workspace/src/silver_script_data_transformation.py && \
+      python3 /workspace/src/gold_auswertungen.py"

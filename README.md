@@ -9,24 +9,67 @@ Basics für spätere SFTP‑Anbindung und Pandas‑Analysen
 
 Fokus aktuell: saubere, reproduzierbare Umgebung. Die eigentliche Analyse‑Logik kommt anschließend.
 
-Ordnerstruktur (Stand jetzt)
-bash
-Kopieren
-Bearbeiten
+-------------------------------------------------------------------------------
+
+Projektstruktur (Stand August 2025)
 .
 ├── .devcontainer/
-│   └── devcontainer.json        # VS Code Devcontainer-Konfiguration
-├── Dockerfile                   # Schlankes Python 3.11-Image
-├── docker-compose.yml           # Service "spendapp" + Volume-Mount
-├── requirements.txt             # Minimale Dependencies (pandas, paramiko
-dotenv, numpy)
-└── README.md                    # (dieses Dokument)
+│   └── devcontainer.json                                # VS Code Devcontainer-Konfiguration
+├── data/
+│   ├── bronze/                                          # Rohdaten (z. B. Rechnungen direkt vom SFTP)
+│   │   └── Rechnungen_SAP_2023.csv
+|   |   └── ...
+│   ├── silver/                                          # Transformierte Daten (z. B. mit Wechselkurs angereichert)
+│   │   └── Rechnungen_SAP_2023_2024.csv
+|   |   └── ...
+│   ├── gold/                                            # Finalisierte Auswertungen (Tabellenexport)
+│   │   └── auswertung_1_2023.csv
+|   |   └── ...
+│   └── wechselkurse.csv                                 # Automatisch generierter Wechselkurs-Datensatz
+│
+├── env/
+│   ├── .env                                             # Lokale Secrets (nicht tracken)
+│   └── .env.example                                     # Beispielkonfiguration für SFTP & API-Zugriff
+│
+├── notebooks/                                           # notebooks für daten exloration und funktion testing
+│   ├── bronze_notebook_load_data.ipynb   
+│   ├── silver_notebook_data_transformation.ipynb
+│   └── gold_notebook_auswertungen.ipynb
+│
+├── src/                                                 # python script zum ausführen von extract, transformation und die auswertungen
+│   ├── bronze_script_load_data.py
+│   ├── silver_script_data_transformation.py
+│   └── gold_auswertungen.py
+│
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt                   # pandas, numpy, paramiko, dotenv
+└── README.md
 
-Geplant (später):
-├── src/                         # Python-Source (SFTP-Loader, Transform, CLI)
-├── notebooks/                   # Interaktiver Code zum Testen
-├── data/                        # Ergebnis-CSV (git-ignored)
-└── .env                         # lokale Secrets (NICHT committen)
+
+-------------------------------------------------------------------------------
+
+Was wird ausgewertet?
+
+Die Auswertung erfolgt auf Basis von Rechnungsdaten aus SAP. Ziel ist es, zentrale Kennzahlen zur Ausgabenstruktur der Beispielfirma zu ermitteln. Dabei wird die Datenqualität durch ein mehrstufiges Transformationsmodell (Bronze → Silver → Gold) sichergestellt.
+
+Die folgenden drei Auswertungen werden durchgeführt:
+
+Top 10 Lieferanten nach Spend in EUR
+ Aggregation der Ausgaben pro Lieferant (Rechnungswährung → EUR umgerechnet).
+
+Top 10 Sachkonten nach Anzahl der Rechnungen
+ Zählung der Belege pro Sachkonto (inkl. Mapping auf Namen).
+
+Monatlicher Spend-Verlauf 2023–2024
+ Zeitliche Verteilung der Ausgaben auf Basis des Belegdatums, gruppiert nach Jahr und Monat.
+
+-------------------------------------------------------------------------------
+
+Wechselkursdaten (Frankfurt API)
+
+Für die Umrechnung von z. B. USD oder GBP in EUR wird automatisch ein Wechselkurs-DataFrame erzeugt, basierend auf der API der Europäischen Zentralbank (Standort Frankfurt).
+Falls keine lokale Datei vorhanden ist, wird die Zeitreihe bei Bedarf abgerufen (Zeitraum: 01.01.2023 – 31.12.2024) und unter data/silver/wechselkurse.csv gespeichert.
 
 -------------------------------------------------------------------------------
 
@@ -103,3 +146,5 @@ In der Dev‑Routine nicht nötig; „Reopen in Container“ ist der Standard.
 
 # Git Verlauf checken
 git log --oneline --decorate --graph
+
+

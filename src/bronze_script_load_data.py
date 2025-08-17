@@ -119,6 +119,7 @@ class AzureSFTPDownloader:
         if not self.sftp:
             raise RuntimeError("SFTP-Verbindung nicht aktiv.")
 
+# Hauptprogramm
 if __name__ == "__main__":
     # init class
     client = AzureSFTPDownloader(HOST, PORT, USERNAME, PASSWORD, remote_dir=".")

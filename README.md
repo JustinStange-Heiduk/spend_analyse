@@ -166,4 +166,6 @@ Falls du nicht möchtest, dass die Analyse bei jedem Start automatisch ausgefüh
 # Git Verlauf checken
 git log --oneline --decorate --graph
 
+# Git Datenänderungen als txt Datei 
+git log --stat > GIT_LOG.txt
 
